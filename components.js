@@ -369,7 +369,7 @@ function resizeCanvasToContainer(canvasId) {
     
     // Set canvas size (maintain aspect ratio for visualizations)
     if (canvasId === 'triangleCanvas') {
-        const aspectRatio = 400 / 300; // Original aspect ratio
+        const aspectRatio = 400 / 400; // Original aspect ratio
         const width = Math.min(availableWidth, 400);
         const height = width / aspectRatio;
         canvas.width = width;
@@ -417,4 +417,5 @@ window.addEventListener('resize', () => {
             drawUnitCircle('unitCircleCanvas', parseInt(activeAngleBtn.dataset.angle));
         }
     }
+
 });

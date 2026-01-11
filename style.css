@@ -1524,7 +1524,162 @@ header {
     border-color: rgba(50, 205, 50, 0.3) !important;
 }
 
+/* PERBAIKAN INPUT NUMBER DI KALKULATOR */
+.calculator-input[type="number"] {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+    color: var(--text);
+}
+
+/* Hilangkan arrow/spinner default yang putih */
+.calculator-input[type="number"]::-webkit-outer-spin-button,
+.calculator-input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Custom spinner/arrow untuk input number */
+.calculator-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.calculator-input-wrapper .calculator-input {
+    padding-right: 3rem; /* Space untuk custom buttons */
+    width: 100%;
+}
+
+/* Custom increment/decrement buttons */
+.custom-number-controls {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 10;
+}
+
+.number-btn {
+    width: 1.75rem;
+    height: 1.5rem;
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(0, 206, 209, 0.2));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.number-btn:hover {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(0, 206, 209, 0.3));
+    color: white;
+    border-color: var(--secondary);
+}
+
+.number-btn:active {
+    transform: scale(0.95);
+}
+
+/* Focus state yang lebih baik */
+.calculator-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(25, 25, 40, 0.95);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.15), 
+                inset 0 2px 10px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Placeholder color */
+.calculator-input::placeholder {
+    color: rgba(176, 176, 208, 0.5);
+}
+
+/* Input container dengan efek glow */
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.input-container:focus-within {
+    transform: translateY(-2px);
+}
+
+.input-container:focus-within .calculator-input {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.15),
+                inset 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Animation untuk input focus */
+@keyframes input-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.3); }
+    70% { box-shadow: 0 0 0 6px rgba(255, 107, 107, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+}
+
+.calculator-input:focus {
+    animation: input-pulse 1.5s infinite;
+}
+
+/* Responsive untuk custom controls */
+@media (max-width: 768px) {
+    .custom-number-controls {
+        right: 0.25rem;
+    }
+    
+    .number-btn {
+        width: 1.5rem;
+        height: 1.25rem;
+        font-size: 0.75rem;
+    }
+    
+    .calculator-input[type="number"] {
+        padding-right: 2.5rem;
+    }
+}
+
+/* Alternatif: Style untuk native number input yang lebih baik */
+.calculator-input[type="number"] {
+    /* Background gradient untuk input */
+    background: linear-gradient(135deg, 
+        rgba(20, 20, 35, 0.9),
+        rgba(30, 30, 50, 0.9)
+    ) !important;
+    border: 2px solid rgba(138, 43, 226, 0.4) !important;
+}
+
+/* Hover effect */
+.calculator-input[type="number"]:hover {
+    border-color: rgba(0, 206, 209, 0.6) !important;
+    background: linear-gradient(135deg, 
+        rgba(25, 25, 45, 0.95),
+        rgba(35, 35, 55, 0.95)
+    ) !important;
+}
+
+/* Active/focus state */
+.calculator-input[type="number"]:focus {
+    border-color: var(--accent) !important;
+    background: linear-gradient(135deg, 
+        rgba(30, 30, 50, 0.95),
+        rgba(40, 40, 60, 0.95)
+    ) !important;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2),
+                inset 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
 /* Responsive dan lainnya tetap sama... */
 
 /* Tambahkan font Montserrat di head HTML */
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');

@@ -850,3 +850,116 @@ window.addEventListener('resize', () => {
 
 });
 
+// SOLUSI ALTERNATIF - SEMUANYA DI SATU TEMPAT
+document.addEventListener('DOMContentLoaded', function() {
+    // Tunggu sampai semua element siap
+    setTimeout(function() {
+        const angleInput = document.getElementById('angleInput');
+        const incrementBtn = document.querySelector('.increment-btn');
+        const decrementBtn = document.querySelector('.decrement-btn');
+        const calculateBtn = document.getElementById('calculateBtn');
+        
+        if (!angleInput) return;
+        
+        console.log('Setting up number controls...'); // Debug log
+        
+        // Fungsi untuk update semua
+        function updateCalculator() {
+            const angle = parseFloat(angleInput.value) || 30;
+            
+            // Update display
+            if (window.Components && window.Components.updateCalculatorDisplay) {
+                window.Components.updateCalculatorDisplay(angle);
+            }
+            
+            // Update triangle slider jika ada
+            const slider = document.getElementById('angleSlider');
+            if (slider) {
+                const validAngle = Math.min(Math.max(angle, 1), 89);
+                slider.value = validAngle;
+                const angleValue = document.getElementById('angleValue');
+                if (angleValue) {
+                    angleValue.textContent = `${validAngle}°`;
+                }
+                
+                // Redraw triangle
+                if (window.Components && window.Components.drawTriangle) {
+                    window.Components.drawTriangle('triangleCanvas', validAngle);
+                }
+            }
+            
+            // Update unit circle jika di halaman yang benar
+            if (document.getElementById('sudut-istimewa')?.classList.contains('active')) {
+                if (window.Components && window.Components.drawUnitCircle) {
+                    window.Components.drawUnitCircle('unitCircleCanvas', angle);
+                }
+            }
+        }
+        
+        // Setup increment button
+        if (incrementBtn) {
+            console.log('Found increment button');
+            incrementBtn.onclick = function(e) {
+                e.preventDefault();
+                let val = parseFloat(angleInput.value) || 0;
+                if (val < 360) {
+                    angleInput.value = val + 1;
+                    updateCalculator();
+                }
+            };
+        }
+        
+        // Setup decrement button
+        if (decrementBtn) {
+            console.log('Found decrement button');
+            decrementBtn.onclick = function(e) {
+                e.preventDefault();
+                let val = parseFloat(angleInput.value) || 0;
+                if (val > 0) {
+                    angleInput.value = val - 1;
+                    updateCalculator();
+                }
+            };
+        }
+        
+        // Setup calculate button
+        if (calculateBtn) {
+            calculateBtn.onclick = function() {
+                updateCalculator();
+            };
+        }
+        
+        // Setup input event
+        angleInput.oninput = function() {
+            let val = parseFloat(this.value);
+            if (isNaN(val)) {
+                this.value = 30;
+            } else if (val < 0) {
+                this.value = 0;
+            } else if (val > 360) {
+                this.value = 360;
+            }
+            updateCalculator();
+        };
+        
+        // Setup keyboard events
+        angleInput.onkeydown = function(e) {
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                let val = parseFloat(this.value) || 0;
+                if (val < 360) {
+                    this.value = val + 1;
+                    updateCalculator();
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                let val = parseFloat(this.value) || 0;
+                if (val > 0) {
+                    this.value = val - 1;
+                    updateCalculator();
+                }
+            }
+        };
+        
+    }, 500); // Tunggu 500ms untuk memastikan semua element sudah ready
+});

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigonometri</title>
+    
+    <!-- External Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Our Files -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-poppins">
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <h1 class="text-xl font-bold text-gray-800 hidden md:block">Materi <span class="text-blue-600">Trigonometri</span></h1>
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button id="mobileMenuToggle" class="md:hidden text-gray-700 text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-1">
+                    <button class="nav-btn active" data-page="beranda">
+                        <i class="fas fa-home mr-2"></i>Beranda
+                    </button>
+                    <button class="nav-btn" data-page="perbandingan">
+                        <i class="fas fa-ruler-combined mr-2"></i>Perbandingan
+                    </button>
+                    <button class="nav-btn" data-page="identitas">
+                        <i class="fas fa-equals mr-2"></i>Identitas
+                    </button>
+                    <button class="nav-btn" data-page="sudut-istimewa">
+                        <i class="fas fa-star mr-2"></i>Sudut Istimewa
+                    </button>
+                    <button class="nav-btn" data-page="aturan">
+                        <i class="fas fa-shapes mr-2"></i>Aturan
+                    </button>
+                    <button class="nav-btn" data-page="contoh-soal">
+                        <i class="fas fa-pen mr-2"></i>Contoh Soal
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobileMenu" class="md:hidden mt-4 hidden">
+                <div class="flex flex-col space-y-2">
+                    <button class="mobile-nav-btn active" data-page="beranda">
+                        <i class="fas fa-home mr-3"></i>Beranda
+                    </button>
+                    <button class="mobile-nav-btn" data-page="perbandingan">
+                        <i class="fas fa-ruler-combined mr-3"></i>Perbandingan Trigonometri
+                    </button>
+                    <button class="mobile-nav-btn" data-page="identitas">
+                        <i class="fas fa-equals mr-3"></i>Identitas Trigonometri
+                    </button>
+                    <button class="mobile-nav-btn" data-page="sudut-istimewa">
+                        <i class="fas fa-star mr-3"></i>Sudut Istimewa
+                    </button>
+                    <button class="mobile-nav-btn" data-page="aturan">
+                        <i class="fas fa-shapes mr-3"></i>Aturan Sinus & Cosinus
+                    </button>
+                    <button class="mobile-nav-btn" data-page="contoh-soal">
+                        <i class="fas fa-pen mr-3"></i>Contoh Soal
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sidebar Navigation (Desktop) -->
+    <aside class="sidebar hidden md:block">
+        
+        <!-- Mini Calculator -->
+        <div class="calculator-container">
+            <h4><i class="fas fa-calculator mr-2"></i> Kalkulator</h4>
+            <div class="calculator">
+                <div class="input-group">
+                    <label for="angleInput">Sudut (derajat):</label>
+                    <input type="number" id="angleInput" value="30" min="0" max="360" class="calculator-input">
+                </div>
+                <div class="trig-results">
+                    <div class="result-item">
+                        <span>sin(θ) =</span>
+                        <span id="sinValue">0.5</span>
+                    </div>
+                    <div class="result-item">
+                        <span>cos(θ) =</span>
+                        <span id="cosValue">0.866</span>
+                    </div>
+                    <div class="result-item">
+                        <span>tan(θ) =</span>
+                        <span id="tanValue">0.577</span>
+                    </div>
+                </div>
+                <button id="calculateBtn" class="calc-btn fx-rings">
+                    <i class="fas fa-sync-alt mr-2"></i> Hitung
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Section 1: Beranda -->
+        <section id="beranda" class="page active" data-aos="fade-up">
+            <div class="page-header">
+                <h1><i class="fas fa-home text-blue-600 mr-3"></i>Beranda</h1>
+                <p class="page-subtitle">Pengenalan Trigonometri Kelas 10</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-bullseye text-coral"></i>
+                        <h3>Apa itu Trigonometri?</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Trigonometri adalah cabang matematika yang mempelajari hubungan antara sudut dan sisi segitiga. Kata "trigonometri" berasal dari bahasa Yunani: <em>trigonon</em> (segitiga) dan <em>metron</em> (pengukuran).</p>
+                        
+                        <div class="mt-4">
+                            <h4 class="text-lg font-semibold mb-2">Konsep Dasar:</h4>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Perbandingan sisi dalam segitiga siku-siku</li>
+                                <li>Fungsi trigonometri: sinus, cosinus, tangen</li>
+                                <li>Lingkaran satuan (unit circle)</li>
+                                <li>Identitas trigonometri</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-globe-americas text-blue-600"></i>
+                        <h3>Aplikasi dalam Kehidupan</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="application-item">
+                            <div class="app-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <div>
+                                <h4>Pengukuran Tinggi</h4>
+                                <p class="text-sm">Mengukur tinggi bangunan atau gunung</p>
+                            </div>
+                        </div>
+                        
+                        <div class="application-item">
+                            <div class="app-icon">
+                                <i class="fas fa-ship"></i>
+                            </div>
+                            <div>
+                                <h4>Navigasi</h4>
+                                <p class="text-sm">Menentukan arah dalam pelayaran</p>
+                            </div>
+                        </div>
+                        
+                        <div class="application-item">
+                            <div class="app-icon">
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                            <div>
+                                <h4>Gelombang & Getaran</h4>
+                                <p class="text-sm">Analisis gelombang suara dan cahaya</p>
+                            </div>
+                        </div>
+                        
+                        <div class="application-item">
+                            <div class="app-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <div>
+                                <h4>Game Development</h4>
+                                <p class="text-sm">Perhitungan gerakan dan rotasi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card col-span-1 md:col-span-2">
+                    <div class="card-header">
+                        <i class="fas fa-road text-green-600"></i>
+                        <h3>Alur Pembelajaran</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="learning-path">
+                            <div class="path-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Perbandingan Trigonometri</h4>
+                                    <p>Memahami sin, cos, tan dalam segitiga siku-siku</p>
+                                </div>
+                            </div>
+                            
+                            <div class="path-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Identitas Trigonometri</h4>
+                                    <p>Mempelajari hubungan antar fungsi trigonometri</p>
+                                </div>
+                            </div>
+                            
+                            <div class="path-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Sudut Istimewa</h4>
+                                    <p>Nilai trigonometri untuk sudut 0°, 30°, 45°, 60°, 90°</p>
+                                </div>
+                            </div>
+                            
+                            <div class="path-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Aturan Sinus & Cosinus</h4>
+                                    <p>Menyelesaikan segitiga sembarang</p>
+                                </div>
+                            </div>
+                            
+                            <div class="path-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h4>Penerapan Soal</h4>
+                                    <p>Menyelesaikan masalah dengan konsep trigonometri</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Perbandingan Trigonometri -->
+        <section id="perbandingan" class="page" data-aos="fade-up">
+            <div class="page-header">
+                <h1><i class="fas fa-ruler-combined text-blue-600 mr-3"></i>Perbandingan Trigonometri</h1>
+                <p class="page-subtitle">Sinus, Cosinus, dan Tangen</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-info-circle text-coral"></i>
+                        <h3>Definisi Dasar</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Dalam segitiga siku-siku dengan sudut θ:</p>
+                        
+                        <div class="space-y-4 mt-4">
+                            <div class="formula-box">
+                                <h4>Sinus (sin)</h4>
+                                <div class="math-formula">\(\sin \theta = \frac{\text{sisi depan}}{\text{sisi miring}}\)</div>
+                                <p class="text-sm mt-1">Perbandingan sisi di depan sudut θ terhadap sisi miring</p>
+                            </div>
+                            
+                            <div class="formula-box">
+                                <h4>Cosinus (cos)</h4>
+                                <div class="math-formula">\(\cos \theta = \frac{\text{sisi samping}}{\text{sisi miring}}\)</div>
+                                <p class="text-sm mt-1">Perbandingan sisi di samping sudut θ terhadap sisi miring</p>
+                            </div>
+                            
+                            <div class="formula-box">
+                                <h4>Tangen (tan)</h4>
+                                <div class="math-formula">\(\tan \theta = \frac{\text{sisi depan}}{\text{sisi samping}}\)</div>
+                                <p class="text-sm mt-1">Perbandingan sisi di depan terhadap sisi di samping sudut θ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-draw-polygon text-blue-600"></i>
+                        <h3>Visualisasi Segitiga</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="triangle-container">
+                            <canvas id="triangleCanvas" width="400" height="300"></canvas>
+                            <div class="triangle-controls mt-4">
+                                <div class="control-group">
+                                    <label for="angleSlider">Sudut θ (derajat):</label>
+                                    <div class="flex items-center space-x-2">
+                                        <input type="range" id="angleSlider" min="1" max="89" value="30" class="slider">
+                                        <span id="angleValue" class="value-display">30°</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label>Panjang sisi miring:</label>
+                                    <div class="value-display">1 (satuan)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card col-span-1 md:col-span-2">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb text-green-600"></i>
+                        <h3>Mnemonik SOH-CAH-TOA</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mnemonic-grid">
+                            <div class="mnemonic-item bg-blue-50 border-blue-200">
+                                <div class="mnemonic-letter">SOH</div>
+                                <div class="mnemonic-content">
+                                    <h4>Sin = Opposite/Hypotenuse</h4>
+                                    <p class="text-sm">Sinus = Sisi depan / Sisi miring</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mnemonic-item bg-coral-50 border-coral-200">
+                                <div class="mnemonic-letter">CAH</div>
+                                <div class="mnemonic-content">
+                                    <h4>Cos = Adjacent/Hypotenuse</h4>
+                                    <p class="text-sm">Cosinus = Sisi samping / Sisi miring</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mnemonic-item bg-green-50 border-green-200">
+                                <div class="mnemonic-letter">TOA</div>
+                                <div class="mnemonic-content">
+                                    <h4>Tan = Opposite/Adjacent</h4>
+                                    <p class="text-sm">Tangen = Sisi depan / Sisi samping</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">Tips Mengingat:</h4>
+                            <p class="text-sm">"<strong>S</strong>ome <strong>O</strong>ld <strong>H</strong>ippie, <strong>C</strong>aught <strong>A</strong>nother <strong>H</strong>ippie, <strong>T</strong>ripping <strong>O</strong>n <strong>A</strong>cid"</p>
+                            <p class="text-xs mt-2 text-gray-600">Atau dalam bahasa Indonesia: "Sindemi, Cosami, Tandesa"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Identitas Trigonometri -->
+        <section id="identitas" class="page" data-aos="fade-up">
+            <div class="page-header">
+                <h1><i class="fas fa-equals text-blue-600 mr-3"></i>Identitas Trigonometri</h1>
+                <p class="page-subtitle">Hubungan Fundamental Antar Fungsi</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-crown text-coral"></i>
+                        <h3>Identitas Pythagoras</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="main-identity">
+                            <div class="math-formula large">\(\sin^2 \theta + \cos^2 \theta = 1\)</div>
+                            <p class="mt-3">Identitas trigonometri paling fundamental yang berasal dari teorema Pythagoras.</p>
+                            
+                            <div class="proof-container mt-6">
+                                <h4 class="font-semibold mb-3">Bukti Visual:</h4>
+                                <div class="proof-grid">
+                                    <div class="proof-step">
+                                        <div class="step-number">1</div>
+                                        <p>Pada lingkaran satuan, titik P memiliki koordinat (cos θ, sin θ)</p>
+                                    </div>
+                                    <div class="proof-step">
+                                        <div class="step-number">2</div>
+                                        <p>Jarak dari P ke pusat (0,0) adalah 1</p>
+                                    </div>
+                                    <div class="proof-step">
+                                        <div class="step-number">3</div>
+                                        <p>Dengan rumus jarak: \( \sqrt{(\cos \theta - 0)^2 + (\sin \theta - 0)^2} = 1 \)</p>
+                                    </div>
+                                    <div class="proof-step">
+                                        <div class="step-number">4</div>
+                                        <p>Kuadratkan kedua sisi: \( \cos^2 \theta + \sin^2 \theta = 1 \)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-link text-blue-600"></i>
+                        <h3>Identitas Turunan</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="space-y-6">
+                            <div class="derived-identity">
+                                <h4 class="font-semibold text-gray-700 mb-2">Dari Identitas Pythagoras:</h4>
+                                <div class="math-formula">\(1 + \tan^2 \theta = \sec^2 \theta\)</div>
+                                <div class="math-formula mt-2">\(1 + \cot^2 \theta = \csc^2 \theta\)</div>
+                            </div>
+                            
+                            <div class="derived-identity">
+                                <h4 class="font-semibold text-gray-700 mb-2">Hubungan Timbal Balik:</h4>
+                                <div class="math-formula">\(\tan \theta = \frac{\sin \theta}{\cos \theta}\)</div>
+                                <div class="math-formula mt-2">\(\cot \theta = \frac{\cos \theta}{\sin \theta} = \frac{1}{\tan \theta}\)</div>
+                            </div>
+                            
+                            <div class="derived-identity">
+                                <h4 class="font-semibold text-gray-700 mb-2">Fungsi Kebalikan:</h4>
+                                <div class="math-formula">\(\sec \theta = \frac{1}{\cos \theta}\)</div>
+                                <div class="math-formula mt-2">\(\csc \theta = \frac{1}{\sin \theta}\)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card col-span-1 md:col-span-2">
+                    <div class="card-header">
+                        <i class="fas fa-sync-alt text-green-600"></i>
+                        <h3>Identitas Sudut Berelasi</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="related-angles-grid">
+                            <div class="related-angle">
+                                <h4>Sudut Komplemen (90° - θ)</h4>
+                                <div class="math-formula">\(\sin(90^\circ - \theta) = \cos \theta\)</div>
+                                <div class="math-formula">\(\cos(90^\circ - \theta) = \sin \theta\)</div>
+                            </div>
+                            
+                            <div class="related-angle">
+                                <h4>Sudut Suplemen (180° - θ)</h4>
+                                <div class="math-formula">\(\sin(180^\circ - \theta) = \sin \theta\)</div>
+                                <div class="math-formula">\(\cos(180^\circ - \theta) = -\cos \theta\)</div>
+                            </div>
+                            
+                            <div class="related-angle">
+                                <h4>Sudut Negatif (-θ)</h4>
+                                <div class="math-formula">\(\sin(-\theta) = -\sin \theta\)</div>
+                                <div class="math-formula">\(\cos(-\theta) = \cos \theta\)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Sudut Istimewa -->
+        <section id="sudut-istimewa" class="page" data-aos="fade-up">
+            <div class="page-header">
+                <h1><i class="fas fa-star text-blue-600 mr-3"></i>Sudut Istimewa</h1>
+                <p class="page-subtitle">Nilai Trigonometri untuk Sudut Khusus</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-table text-coral"></i>
+                        <h3>Tabel Sudut Istimewa</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="overflow-x-auto">
+                            <table class="special-angles-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sudut</th>
+                                        <th>sin θ</th>
+                                        <th>cos θ</th>
+                                        <th>tan θ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>0°</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>30°</td>
+                                        <td>\(\frac{1}{2}\)</td>
+                                        <td>\(\frac{\sqrt{3}}{2}\)</td>
+                                        <td>\(\frac{1}{\sqrt{3}}\)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>45°</td>
+                                        <td>\(\frac{\sqrt{2}}{2}\)</td>
+                                        <td>\(\frac{\sqrt{2}}{2}\)</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>60°</td>
+                                        <td>\(\frac{\sqrt{3}}{2}\)</td>
+                                        <td>\(\frac{1}{2}\)</td>
+                                        <td>\(\sqrt{3}\)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>90°</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>∞</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h4 class="font-semibold mb-3">Cara Mengingat:</h4>
+                            <div class="memory-tips">
+                                <div class="tip">
+                                    <div class="tip-icon">
+                                        <i class="fas fa-fingerprint"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Metode Jari</h5>
+                                        <p class="text-sm">Gunakan jari tangan untuk mengingat nilai sin dari 0° hingga 90°</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="tip">
+                                    <div class="tip-icon">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Segitiga Istimewa</h5>
+                                        <p class="text-sm">Ingat segitiga 45-45-90 dan 30-60-90</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-circle text-blue-600"></i>
+                        <h3>Lingkaran Satuan</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="unit-circle-container">
+                            <canvas id="unitCircleCanvas" width="350" height="350"></canvas>
+                            <div class="unit-circle-controls mt-4">
+                                <div class="control-group">
+                                    <label>Pilih sudut:</label>
+                                    <div class="angle-buttons">
+                                        <button class="angle-btn" data-angle="30">30°</button>
+                                        <button class="angle-btn" data-angle="45">45°</button>
+                                        <button class="angle-btn" data-angle="60">60°</button>
+                                        <button class="angle-btn active" data-angle="0">0°</button>
+                                        <button class="angle-btn" data-angle="90">90°</button>
+                                    </div>
+                                </div>
+                                <div class="unit-circle-info mt-3">
+                                    <div class="info-item">
+                                        <span>Koordinat:</span>
+                                        <span id="circleCoords">(1, 0)</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span>sin θ:</span>
+                                        <span id="circleSin">0</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span>cos θ:</span>
+                                        <span id="circleCos">1</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card col-span-1 md:col-span-2">
+                    <div class="card-header">
+                        <i class="fas fa-shapes text-green-600"></i>
+                        <h3>Segitiga Istimewa</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="special-triangles-grid">
+                            <div class="special-triangle">
+                                <h4>Segitiga 45°-45°-90°</h4>
+                                <div class="triangle-diagram">
+                                    <div class="triangle-45"></div>
+                                    <div class="triangle-labels">
+                                        <span class="label-45">45°</span>
+                                        <span class="label-45">45°</span>
+                                        <span class="label-side">1</span>
+                                        <span class="label-side">1</span>
+                                        <span class="label-hyp">\(\sqrt{2}\)</span>
+                                    </div>
+                                </div>
+                                <div class="triangle-info">
+                                    <p>Rasio sisi: \(1 : 1 : \sqrt{2}\)</p>
+                                    <p class="text-sm">Dari sin 45° = cos 45° = \(\frac{\sqrt{2}}{2}\)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="special-triangle">
+                                <h4>Segitiga 30°-60°-90°</h4>
+                                <div class="triangle-diagram">
+                                    <div class="triangle-30-60"></div>
+                                    <div class="triangle-labels">
+                                        <span class="label-30">30°</span>
+                                        <span class="label-60">60°</span>
+                                        <span class="label-side">1</span>
+                                        <span class="label-side">\(\sqrt{3}\)</span>
+                                        <span class="label-hyp">2</span>
+                                    </div>
+                                </div>
+                                <div class="triangle-info">
+                                    <p>Rasio sisi: \(1 : \sqrt{3} : 2\)</p>
+                                    <p class="text-sm">sin 30° = \(\frac{1}{2}\), sin 60° = \(\frac{\sqrt{3}}{2}\)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Aturan Sinus & Cosinus -->
+        <section id="aturan" class="page" data-aos="fade-up">
+            <div class="page-header">
+                <h1><i class="fas fa-shapes text-blue-600 mr-3"></i>Aturan Sinus & Cosinus</h1>
+                <p class="page-subtitle">Menyelesaikan Segitiga Sembarang</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-wave-sine text-coral"></i>
+                        <h3>Aturan Sinus</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="rule-container">
+                            <div class="math-formula large">\(\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R\)</div>
+                            
+                            <div class="rule-explanation mt-4">
+                                <h4 class="font-semibold mb-2">Keterangan:</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>a, b, c = panjang sisi segitiga</li>
+                                    <li>A, B, C = besar sudut di hadapan sisi a, b, c</li>
+                                    <li>R = jari-jari lingkaran luar segitiga</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="rule-usage mt-6">
+                                <h4 class="font-semibold mb-3">Digunakan ketika diketahui:</h4>
+                                <div class="usage-grid">
+                                    <div class="usage-item">
+                                        <div class="usage-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p>2 sudut & 1 sisi</p>
+                                    </div>
+                                    <div class="usage-item">
+                                        <div class="usage-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p>2 sisi & 1 sudut (bukan sudut apit)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-cosine text-blue-600"></i>
+                        <h3>Aturan Cosinus</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="rule-container">
+                            <div class="math-formula">\(a^2 = b^2 + c^2 - 2bc \cos A\)</div>
+                            <div class="math-formula mt-2">\(b^2 = a^2 + c^2 - 2ac \cos B\)</div>
+                            <div class="math-formula mt-2">\(c^2 = a^2 + b^2 - 2ab \cos C\)</div>
+                            
+                            <div class="rule-explanation mt-4">
+                                <h4 class="font-semibold mb-2">Keterangan:</h4>
+                                <p>Aturan cosinus adalah perluasan teorema Pythagoras untuk segitiga sembarang.</p>
+                            </div>
+                            
+                            <div class="rule-usage mt-6">
+                                <h4 class="font-semibold mb-3">Digunakan ketika diketahui:</h4>
+                                <div class="usage-grid">
+                                    <div class="usage-item">
+                                        <div class="usage-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p>3 sisi (mencari sudut)</p>
+                                    </div>
+                                    <div class="usage-item">
+                                        <div class="usage-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <p>2 sisi & 1 sudut apit</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card col-span-1 md:col-span-2">
+                    <div class="card-header">
+                        <i class="fas fa-project-diagram text-green-600"></i>
+                        <h3>Perbandingan & Contoh Kasus</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Kasus</th>
+                                        <th>Aturan yang Digunakan</th>
+                                        <th>Alasan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Diketahui 2 sudut & 1 sisi</td>
+                                        <td>Aturan Sinus</td>
+                                        <td>Dapat dicari sisi lainnya</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diketahui 2 sisi & sudut di hadapan salah satu sisi</td>
+                                        <td>Aturan Sinus</td>
+                                        <td>Mencari sudut lainnya</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diketahui 3 sisi</td>
+                                        <td>Aturan Cosinus</td>
+                                        <td>Mencari besar sudut</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diketahui 2 sisi & sudut apit</td>
+                                        <td>Aturan Cosinus</td>
+                                        <td>Mencari sisi ketiga</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h4 class="font-semibold mb-3">Tips Penyelesaian:</h4>
+                            <div class="tips-list">
+                                <div class="tip-item">
+                                    <span class="tip-number">1</span>
+                                    <p>Gambar segitiga dan label semua informasi yang diketahui</p>
+                                </div>
+                                <div class="tip-item">
+                                    <span class="tip-number">2</span>
+                                    <p>Tentukan aturan yang sesuai berdasarkan informasi</p>
+                                </div>
+                                <div class="tip-item">
+                                    <span class="tip-number">3</span>
+                                    <p>Gunakan kalkulator untuk nilai trigonometri yang tidak istimewa</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Contoh Soal -->
+        <section id="contoh-soal" class="page" data-aos="fade-up">
+            <div class="page-header">
+                <h1><i class="fas fa-pen text-blue-600 mr-3"></i>Contoh Soal</h1>
+                <p class="page-subtitle">Penerapan Konsep Trigonometri</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="question-number">1</div>
+                        <h3>Segitiga Siku-Siku</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="question-content">
+                            <p>Sebuah segitiga siku-siku ABC dengan sudut siku-siku di B. Jika panjang AB = 6 cm dan BC = 8 cm, tentukan:</p>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1">
+                                <li>Panjang AC</li>
+                                <li>sin A, cos A, tan A</li>
+                                <li>sin C, cos C, tan C</li>
+                            </ol>
+                            
+                            <div class="solution mt-6">
+                                <h4 class="font-semibold mb-3">Penyelesaian:</h4>
+                                
+                                <div class="solution-step">
+                                    <h5>1. Panjang AC (sisi miring)</h5>
+                                    <div class="math-formula">\(AC = \sqrt{AB^2 + BC^2} = \sqrt{6^2 + 8^2} = \sqrt{36 + 64} = \sqrt{100} = 10 \text{ cm}\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>2. Untuk sudut A:</h5>
+                                    <div class="math-formula">\(\sin A = \frac{BC}{AC} = \frac{8}{10} = 0.8\)</div>
+                                    <div class="math-formula">\(\cos A = \frac{AB}{AC} = \frac{6}{10} = 0.6\)</div>
+                                    <div class="math-formula">\(\tan A = \frac{BC}{AB} = \frac{8}{6} = \frac{4}{3}\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>3. Untuk sudut C:</h5>
+                                    <div class="math-formula">\(\sin C = \frac{AB}{AC} = \frac{6}{10} = 0.6\)</div>
+                                    <div class="math-formula">\(\cos C = \frac{BC}{AC} = \frac{8}{10} = 0.8\)</div>
+                                    <div class="math-formula">\(\tan C = \frac{AB}{BC} = \frac{6}{8} = \frac{3}{4}\)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="question-number">2</div>
+                        <h3>Identitas Trigonometri</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="question-content">
+                            <p>Buktikan bahwa: \(\frac{1 - \cos^2 \theta}{\sin \theta \cos \theta} = \tan \theta\)</p>
+                            
+                            <div class="solution mt-6">
+                                <h4 class="font-semibold mb-3">Pembuktian:</h4>
+                                
+                                <div class="proof-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <p>Gunakan identitas \(\sin^2 \theta + \cos^2 \theta = 1\)</p>
+                                        <div class="math-formula">\(1 - \cos^2 \theta = \sin^2 \theta\)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="proof-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <p>Substitusi ke persamaan awal:</p>
+                                        <div class="math-formula">\(\frac{\sin^2 \theta}{\sin \theta \cos \theta}\)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="proof-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <p>Sederhanakan:</p>
+                                        <div class="math-formula">\(\frac{\sin \theta}{\cos \theta}\)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="proof-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <p>Gunakan definisi tangen:</p>
+                                        <div class="math-formula">\(\frac{\sin \theta}{\cos \theta} = \tan \theta\)</div>
+                                        <p class="mt-2 text-sm">Terbukti ✓</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="question-number">3</div>
+                        <h3>Aturan Sinus</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="question-content">
+                            <p>Diketahui segitiga ABC dengan panjang sisi a = 8 cm, b = 6 cm, dan sudut A = 60°. Tentukan besar sudut B.</p>
+                            
+                            <div class="solution mt-6">
+                                <h4 class="font-semibold mb-3">Penyelesaian:</h4>
+                                
+                                <div class="solution-step">
+                                    <h5>Gunakan aturan sinus:</h5>
+                                    <div class="math-formula">\(\frac{a}{\sin A} = \frac{b}{\sin B}\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>Substitusi nilai:</h5>
+                                    <div class="math-formula">\(\frac{8}{\sin 60^\circ} = \frac{6}{\sin B}\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>Karena \(\sin 60^\circ = \frac{\sqrt{3}}{2}\):</h5>
+                                    <div class="math-formula">\(\frac{8}{\frac{\sqrt{3}}{2}} = \frac{6}{\sin B}\)</div>
+                                    <div class="math-formula">\(\frac{16}{\sqrt{3}} = \frac{6}{\sin B}\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>Maka:</h5>
+                                    <div class="math-formula">\(\sin B = \frac{6\sqrt{3}}{16} = \frac{3\sqrt{3}}{8} \approx 0.6495\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>Sehingga:</h5>
+                                    <div class="math-formula">\(B = \arcsin(0.6495) \approx 40.5^\circ\)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="question-number">4</div>
+                        <h3>Aturan Cosinus</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="question-content">
+                            <p>Sebuah segitiga memiliki panjang sisi 7 cm, 8 cm, dan 9 cm. Tentukan besar sudut terkecil dalam segitiga tersebut.</p>
+                            
+                            <div class="solution mt-6">
+                                <h4 class="font-semibold mb-3">Penyelesaian:</h4>
+                                
+                                <div class="solution-step">
+                                    <h5>Misal sisi: a=7, b=8, c=9</h5>
+                                    <p>Sudut terkecil berada di hadapan sisi terpendek (a=7)</p>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>Gunakan aturan cosinus:</h5>
+                                    <div class="math-formula">\(\cos A = \frac{b^2 + c^2 - a^2}{2bc}\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>Substitusi nilai:</h5>
+                                    <div class="math-formula">\(\cos A = \frac{8^2 + 9^2 - 7^2}{2 \times 8 \times 9} = \frac{64 + 81 - 49}{144} = \frac{96}{144} = \frac{2}{3}\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>Maka:</h5>
+                                    <div class="math-formula">\(A = \arccos\left(\frac{2}{3}\right) \approx 48.2^\circ\)</div>
+                                </div>
+                                
+                                <div class="solution-step">
+                                    <h5>Jadi sudut terkecil ≈ 48.2°</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="website-footer">
+        <div class="footer-line"></div>
+        <div class="footer-content">
+            <div class="group-name">Nama Anggota Kelompok</div>
+            <div class="members-list">
+                <div class="member">Hafidz Rifky P. A.</div>
+                <div class="member">Reynando Andre A.</div>
+                <div class="member">Fajar Kencana M. D.</div>
+                <div class="member">Satria Anggara P.</div>
+            </div>
+        </div>
+        <div class="footer-line"></div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="components.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

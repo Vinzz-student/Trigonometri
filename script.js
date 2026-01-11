@@ -190,6 +190,10 @@ function setupEventListeners() {
             Components.updateCalculatorDisplay(angle);
         });
     });
+
+    window.addEventListener('resize', () => {
+        Components.handleWindowResize();
+    });
     
     // Handle URL hash on page load
     window.addEventListener('load', () => {
@@ -296,3 +300,4 @@ window.App = {
     hideAllPages,
     updateActiveNav
 };
+

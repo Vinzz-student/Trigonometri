@@ -219,6 +219,10 @@ function setupEventListeners() {
             MathJax.typesetPromise();
         }
     });
+
+    wwindow.addEventListener('resize', () => {
+        Components.handleWindowResize();
+    });
     
     // Re-render MathJax when switching pages
     document.querySelectorAll('[data-page]').forEach(btn => {

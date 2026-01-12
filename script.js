@@ -89,7 +89,129 @@ function updatePageVisualizations(pageId) {
     }
 }
 
-// 3. EVENT LISTENERS SETUP
+// 3. FUNGSI UNTUK MENANGANI INPUT KALKULATOR
+function setupCalculatorInput() {
+    const angleInput = document.getElementById('angleInput');
+    const incrementBtn = document.querySelector('.increment-btn');
+    const decrementBtn = document.querySelector('.decrement-btn');
+    const calculateBtn = document.getElementById('calculateBtn');
+
+    if (!angleInput) return;
+
+    // Fungsi untuk memvalidasi dan memperbarui nilai
+    function validateAndUpdate() {
+        let value = angleInput.value.trim();
+        
+        // Jika kosong, set ke 30 (default)
+        if (value === '') {
+            angleInput.value = '30';
+            value = '30';
+        }
+        
+        // Konversi ke angka
+        let num = Number(value);
+        
+        // Jika bukan angka, set ke default
+        if (isNaN(num)) {
+            angleInput.value = '30';
+            num = 30;
+        }
+        
+        // Batasi range antara 1 dan 360
+        if (num < 1) {
+            angleInput.value = '1';
+            num = 1;
+        } else if (num > 360) {
+            angleInput.value = '360';
+            num = 360;
+        }
+        
+        // Perbarui kalkulator
+        Components.updateCalculatorDisplay(num);
+        
+        // Perbarui visualisasi jika diperlukan
+        if (currentPage === 'perbandingan') {
+            const slider = document.getElementById('angleSlider');
+            if (slider) {
+                // Untuk segitiga, batasi antara 1-89 derajat
+                const triangleAngle = Math.min(Math.max(num, 1), 89);
+                slider.value = triangleAngle;
+                document.getElementById('angleValue').textContent = `${triangleAngle}°`;
+                Components.drawTriangle('triangleCanvas', triangleAngle);
+            }
+        }
+        
+        if (currentPage === 'sudut-istimewa') {
+            Components.drawUnitCircle('unitCircleCanvas', num);
+        }
+    }
+
+    // Event untuk input biasa
+    angleInput.addEventListener('input', function() {
+        // Biarkan user mengetik angka apa saja
+        // Validasi akan dilakukan saat kehilangan fokus
+    });
+
+    // Event saat kehilangan fokus (blur)
+    angleInput.addEventListener('blur', validateAndUpdate);
+
+    // Event untuk tombol Enter
+    angleInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            validateAndUpdate();
+        }
+    });
+
+    // Tombol increment
+    if (incrementBtn) {
+        incrementBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let currentValue = Number(angleInput.value) || 30;
+            if (currentValue < 360) {
+                angleInput.value = currentValue + 1;
+                validateAndUpdate();
+            }
+        });
+    }
+
+    // Tombol decrement
+    if (decrementBtn) {
+        decrementBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let currentValue = Number(angleInput.value) || 30;
+            if (currentValue > 1) {
+                angleInput.value = currentValue - 1;
+                validateAndUpdate();
+            }
+        });
+    }
+
+    // Tombol hitung
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', validateAndUpdate);
+    }
+
+    // Tombol keyboard atas/bawah
+    angleInput.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            let currentValue = Number(angleInput.value) || 30;
+            if (currentValue < 360) {
+                angleInput.value = currentValue + 1;
+                validateAndUpdate();
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            let currentValue = Number(angleInput.value) || 30;
+            if (currentValue > 1) {
+                angleInput.value = currentValue - 1;
+                validateAndUpdate();
+            }
+        }
+    });
+}
+
+// 4. EVENT LISTENERS SETUP
 function setupEventListeners() {
     // Desktop navigation buttons
     document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -128,39 +250,8 @@ function setupEventListeners() {
         });
     }
     
-    // Calculator button
-    const calculateBtn = document.getElementById('calculateBtn');
-    if (calculateBtn) {
-        calculateBtn.addEventListener('click', () => {
-            const angleInput = document.getElementById('angleInput');
-            if (angleInput) {
-                const angle = parseFloat(angleInput.value);
-                if (!isNaN(angle)) {
-                    Components.updateCalculatorDisplay(angle);
-                    
-                    // Also update triangle visualization if we're on that page
-                    if (currentPage === 'perbandingan') {
-                        const slider = document.getElementById('angleSlider');
-                        if (slider) {
-                            slider.value = Math.min(Math.max(angle, 1), 89);
-                            document.getElementById('angleValue').textContent = `${slider.value}°`;
-                            Components.drawTriangle('triangleCanvas', slider.value);
-                        }
-                    }
-                    
-                    // Update unit circle if we're on that page
-                    if (currentPage === 'sudut-istimewa') {
-                        Components.drawUnitCircle('unitCircleCanvas', angle);
-                        
-                        // Update angle buttons
-                        document.querySelectorAll('.angle-btn').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                    }
-                }
-            }
-        });
-    }
+    // Setup calculator input dengan benar
+    setupCalculatorInput();
     
     // Triangle angle slider
     const angleSlider = document.getElementById('angleSlider');
@@ -189,10 +280,6 @@ function setupEventListeners() {
             Components.drawUnitCircle('unitCircleCanvas', angle);
             Components.updateCalculatorDisplay(angle);
         });
-    });
-
-    window.addEventListener('resize', () => {
-        Components.handleWindowResize();
     });
     
     // Handle URL hash on page load
@@ -224,7 +311,7 @@ function setupEventListeners() {
         }
     });
 
-    wwindow.addEventListener('resize', () => {
+    window.addEventListener('resize', () => {
         Components.handleWindowResize();
     });
     
@@ -258,7 +345,7 @@ function setupEventListeners() {
     });
 }
 
-// 4. FILL FOOTER WITH GROUP MEMBERS
+// 5. FILL FOOTER WITH GROUP MEMBERS
 function initializeFooter() {
     // Replace these with actual group member names
     const groupMembers = [
@@ -280,7 +367,7 @@ function initializeFooter() {
     }
 }
 
-// 5. INITIALIZE APPLICATION
+// 6. INITIALIZE APPLICATION
 function initializeApp() {
     setupEventListeners();
     initializeFooter();
@@ -291,13 +378,12 @@ function initializeApp() {
     }
 }
 
-// 6. START THE APPLICATION
+// 7. START THE APPLICATION
 document.addEventListener('DOMContentLoaded', initializeApp);
 
-// 7. MAKE FUNCTIONS GLOBALLY AVAILABLE
+// 8. MAKE FUNCTIONS GLOBALLY AVAILABLE
 window.App = {
     showPage,
     hideAllPages,
     updateActiveNav
 };
-
